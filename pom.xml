@@ -539,18 +539,19 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.]]>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-war-plugin</artifactId>
-				<version>2.2</version>
-				<!-- <configuration> <webXml>target/web.xml</webXml> </configuration> -->
+				<version>3.3.2</version>
 				<configuration>
+					<packagingExcludes>
+						WEB-INF/lib/jchem*.jar,
+						WEB-INF/lib/license*.jar
+					</packagingExcludes>
 					<archive>
 						<manifest>
 							<addDefaultImplementationEntries>true</addDefaultImplementationEntries>
+							<addDefaultSpecificationEntries>true</addDefaultSpecificationEntries>
 						</manifest>
 						<manifestEntries>
-							<!-- Adds ${buildNumber} as an entry in the manifest file -->
-							<Git-SHA-1>${buildNumber}</Git-SHA-1>
-							<Build-Scm-Branch>${scmBranch}</Build-Scm-Branch>
-							<BuildDate>${maven.build.timestamp}</BuildDate>
+							<Implementation-Build>${buildNumber}</Implementation-Build>
 						</manifestEntries>
 					</archive>
 				</configuration>
