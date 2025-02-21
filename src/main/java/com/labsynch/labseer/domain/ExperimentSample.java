@@ -1,86 +1,54 @@
 package com.labsynch.labseer.domain;
 
 import javax.persistence.Entity;
-import javax.persistence.EntityManager;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.PersistenceContext;
 import javax.persistence.Table;
-import javax.persistence.Column;
-
-import org.springframework.beans.factory.annotation.Configurable;
-import org.springframework.transaction.annotation.Transactional;
-
-import flexjson.JSONDeserializer;
-import flexjson.JSONSerializer;
-
-import org.springframework.roo.addon.javabean.RooJavaBean;
-import org.springframework.roo.addon.tostring.RooToString;
-import org.springframework.roo.addon.jpa.activerecord.RooJpaActiveRecord;
 
 @Entity
-@Table(name = "experiment_samples")
-@Configurable
-@Transactional
-@RooJavaBean
-@RooToString
-@RooJpaActiveRecord
+@Table(name = "experiment_sample")
 public class ExperimentSample {
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "experiment_id")
+    @JoinColumn(name = "experiment_order_id")
     private ExperimentOrder experimentOrder;
 
-    @ManyToOne 
-    @JoinColumn(name = "sample_id")
-    private Sample sample;
+    @ManyToOne
+    @JoinColumn(name = "compound_id")
+    private Compound compound;
 
-    @Column(name = "sample_role")
-    private String sampleRole;
-
-    @PersistenceContext
-    transient EntityManager entityManager;
-
-    public String toJson() {
-        return new JSONSerializer()
-            .exclude("*.class")
-            .serialize(this);
+    public Long getId() {
+        return id;
     }
 
-    public static ExperimentSample fromJson(String json) {
-        return new JSONDeserializer<ExperimentSample>()
-            .use(null, ExperimentSample.class)
-            .deserialize(json);
+    public void setId(Long id) {
+        this.id = id;
     }
 
-    // Getters and setters
     public ExperimentOrder getExperimentOrder() {
-        return this.experimentOrder;
+        return experimentOrder;
     }
 
     public void setExperimentOrder(ExperimentOrder experimentOrder) {
         this.experimentOrder = experimentOrder;
     }
 
-    public Integer getSampleId() {
-        return this.sample.getId();
+    public Compound getCompound() {
+        return compound;
     }
 
-    public void setSampleId(Integer sampleId) {
-        this.sample.setId(sampleId);
+    public void setCompound(Compound compound) {
+        this.compound = compound;
     }
 
-    public String getSampleRole() {
-        return this.sampleRole;
-    }
-
-    public void setSampleRole(String sampleRole) {
-        this.sampleRole = sampleRole;
+    public static void deleteByExperimentOrder(ExperimentOrder experimentOrder) {
+        // Implementation for deleting samples by experiment order
     }
 } 

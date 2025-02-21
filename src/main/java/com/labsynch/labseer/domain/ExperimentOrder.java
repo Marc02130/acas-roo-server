@@ -94,10 +94,10 @@ public class ExperimentOrder {
     private String protocolId;
 
     @OneToMany(mappedBy = "experimentOrder", cascade = CascadeType.ALL)
-    private Set<ExperimentSample> experimentSamples;
+    private Collection<ExperimentSample> experimentSamples;
 
     @Transient
-    private Collection<Sample> samples;
+    private Collection<Compound> compounds;
 
     @PersistenceContext
     transient EntityManager entityManager;
@@ -236,17 +236,21 @@ public class ExperimentOrder {
     public String getProtocolId() { return this.protocolId; }
     public void setProtocolId(String protocolId) { this.protocolId = protocolId; }
 
-    public Collection<Sample> getSamples() {
-        if (samples == null) {
-            samples = new ArrayList<>();
+    public Collection<Compound> getCompounds() {
+        if (compounds == null) {
+            compounds = new ArrayList<>();
             for (ExperimentSample es : experimentSamples) {
-                samples.add(es.getSample());
+                compounds.add(es.getCompound());
             }
         }
-        return samples;
+        return compounds;
     }
 
-    public void setSamples(Collection<Sample> samples) {
-        this.samples = samples;
+    public void setCompounds(Collection<Compound> compounds) {
+        this.compounds = compounds;
+    }
+
+    public Collection<ExperimentSample> getExperimentSamples() {
+        return experimentSamples;
     }
 } 
