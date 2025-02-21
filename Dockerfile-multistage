@@ -1,4 +1,4 @@
-ARG 	CHEMISTRY_PACKAGE=bbchem
+ARG CHEMISTRY_PACKAGE=indigo
 FROM maven:3-openjdk-11 AS builder
 
 FROM 	builder AS compile
